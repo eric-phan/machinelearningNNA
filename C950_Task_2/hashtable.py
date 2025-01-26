@@ -1,5 +1,5 @@
 # HashTable class using chaining method.
-class ChainingHashTable:
+class HashTable:
     # Constructor with optional initial capacity parameter.
     # Assigns buckets with an empty list.
     #O(n)

@@ -1,7 +1,9 @@
 from package import Package
-from hashtable import ChainingHashTable
+from hashtable import HashTable
 from nearest_neighbor import *
 import distances
+import matplotlib.pyplot as plt
+
 import datetime
 import csv
 
@@ -18,6 +20,12 @@ def set_location(truck):
 # O(n)
 def compute_truck_distance(truck_list, idx_list):
     total_distance = 0
+
+    # # Print truck details before computing the distance
+    # print(f"Truck details (Total packages: {len(truck_list)}):")
+    # print(f"Truck start time: {truck_list[0].start}")
+    # print(f"Truck ID: {truck_list[0].truck_num}")
+    # print(f"Truck current status: {truck_list[0].status}")
 
     for idx in range(len(idx_list)):
         try:
@@ -36,7 +44,7 @@ with open('csv_files/package.csv') as f:
     next(packageData)
 
     # Initialize hash map and trucks
-    hm = ChainingHashTable()
+    hm = HashTable()
     truck_1 = []
     truck_2 = []
     truck_3 = []
@@ -127,10 +135,53 @@ with open('csv_files/package.csv') as f:
         truck_3_dist = 0
         # print("Truck 1 and 2 are not finished. Truck 3 cannot start yet.")
 
+
+
     # Return total distance travelled by all 3 trucks
     def get_total_distance():
         return truck_1_dist + truck_2_dist + truck_3_dist
 
     # Output the total distance
     # print(f"Total distance traveled by all trucks: {get_total_distance()} km")
+
+    #load truck for visualizations:
+
+    def load_truck_data():
+        # Define truck data loading and processing logic here
+        truck_data = {
+
+            "truck_1_dist": truck_1_dist,
+            "truck_2_dist": truck_2_dist,
+            "truck_3_dist": truck_3_dist,
+            "total_distance": get_total_distance(),
+            "completion_times": {
+                "truck_1": truck_1_completion_time.time(),
+                "truck_2": truck_2_completion_time.time(),
+                "truck_3_start": actual_truck_3_start_time.time(),
+            },
+        }
+        return truck_data
+
+
+def visualize_truck_completion_times():
+    # Calculate the time it took for each truck to complete its delivery (in hours)
+    truck_1_duration = (truck_1_completion_time - datetime.datetime.strptime('08:00:00', '%H:%M:%S')).seconds / 3600
+    truck_2_duration = (truck_2_completion_time - datetime.datetime.strptime('09:10:00', '%H:%M:%S')).seconds / 3600
+    truck_3_duration = (actual_truck_3_start_time - datetime.datetime.strptime('11:00:00', '%H:%M:%S')).seconds / 3600
+
+    completion_times = {
+        "Truck 1": truck_1_duration,
+        "Truck 2": truck_2_duration,
+        "Truck 3": truck_3_duration
+    }
+
+    # Plot the time durations
+    plt.bar(completion_times.keys(), completion_times.values(), color='lightgreen')
+    plt.title("Truck Delivery Completion Times (in Hours)")
+    plt.xlabel("Truck")
+    plt.ylabel("Time Taken (hours)")
+    plt.show()
+
+
+
 
