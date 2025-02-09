@@ -82,3 +82,35 @@ def get_single_package(hm, id, time):
 
     except:
         print('Invalid input, try again.')
+
+
+
+def get_package_data_for_visualization(hm, time_str):
+    try:
+        # Parse time
+        time = datetime.timedelta(
+            hours=int(time_str.split(":")[0]),
+            minutes=int(time_str.split(":")[1]),
+            seconds=int(time_str.split(":")[2])
+        )
+
+        package_data = []
+
+        # Retrieve package data
+        for i in range(1, 41):  # Assuming package IDs are 1 to 40
+            package = hm.search(i)
+            if package:
+                package_data.append({
+                    'ID': package.ID,
+                    'Status': package.status,
+                    'Address': package.address,
+                    'Start Time': package.start,
+                    'Weight': package.weight,
+                })
+
+        return package_data
+
+    except Exception as e:
+        print(f"Error in get_package_data_for_visualization: {e}")
+        raise  # Re-raise the exception for further debugging
+

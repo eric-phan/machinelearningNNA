@@ -3,7 +3,7 @@ from load_trucks import *
 from options import *
 from visualization import *  # Import the visualization function
 from load_trucks import get_total_distance
-from load_trucks import get_trucks
+
 
 
 
@@ -12,7 +12,7 @@ def main():
     print("1. Print Total Mileage")
     print("2. Get All Packages at a single time.")
     print("3. Get A Specific package at a single time.")
-    print("4. Visualize Delivery Routes")  # New option
+    print("4. Visualize Package Weights")  # New option
     print("5. Visualize Trucks Completion Times")  # New option
     print("6. Visualize delivery data.")  # New option
     print("7. Exit the Program")
@@ -36,15 +36,13 @@ def main():
                     get_single_package(hm, id,time)
                     break
                 case 4:
-                    # Load data it in visualization and call it here.
-                    # Visualize the number of packages per truck
-                    # View package completion amongst trucks
-                    # Retrieve package data for a given time
-                    time_str = input('Enter time in (HH:MM:SS) format: ')
-                    package_data = get_package_data_for_visualization(hm, time_str)
-                    print("Package data at time:", time_str)
-                    for package in package_data:
-                        print(package)  # Print each package's data
+                    time_str = input('Enter the time (HH:MM:SS) to retrieve and visualize package data: ')
+                    try:
+                        package_data = get_package_data_for_visualization(hm, time_str)
+                        print(f"Visualizing data for {len(package_data)} packages...")
+                        visualize_package_weight(package_data)  # Call visualization
+                    except Exception as e:
+                        print(f"Failed to visualize package data: {e}")
                 case 5:
                     # view package completion amongst trucks (working)
                     visualize_truck_completion_times()
@@ -52,6 +50,7 @@ def main():
                 case 6:
                     # view distances traveled (working)
                     visualize_distance_data()
+
                 case 7:
                     print('Have a good day.')
                     break

@@ -46,3 +46,6 @@ def optimized_route(truck, current_location, sorted_truck, sorted_truck_idx):
 
     # If no valid package is found, return current state
     return sorted_truck, sorted_truck_idx
+
+
+
