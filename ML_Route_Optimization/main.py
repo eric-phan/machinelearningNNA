@@ -1,4 +1,3 @@
-# Student ID: 011788985
 from load_trucks import *
 from options import *
 from visualization import *  # Import the visualization function
@@ -14,7 +13,7 @@ def main():
     print("3. Get A Specific package at a single time.")
     print("4. Visualize Package Weights")  # New option
     print("5. Visualize Trucks Completion Times")  # New option
-    print("6. Visualize delivery data.")  # New option
+    print("6. Visualize distance traveled by truck.")  # New option
     print("7. Exit the Program")
 
 
